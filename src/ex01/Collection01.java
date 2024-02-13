@@ -1,8 +1,7 @@
 package ex01;
 
 import java.util.*;
-import java.util.LinkedList;
-import java.util.List;
+
 
 public class Collection01 {
     public static void main(String[] args) {
