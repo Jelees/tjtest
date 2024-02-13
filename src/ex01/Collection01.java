@@ -27,6 +27,8 @@ public class Collection01 {
         while(iter.hasNext()){
             System.out.print(iter.next()+" ");
         }
+        System.out.println();
 
+        arrList.set(0,20);
     }
 }
