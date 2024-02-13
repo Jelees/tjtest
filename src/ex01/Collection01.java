@@ -24,6 +24,9 @@ public class Collection01 {
 
         Collections.sort(arrList);
         Iterator<Integer> iter = arrList.iterator();
+        while(iter.hasNext()){
+            System.out.print(iter.next()+" ");
+        }
 
     }
 }
