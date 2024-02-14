@@ -5,13 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Keypad extends JFrame implements ActionListener {
+public class Calculator extends JFrame implements ActionListener {
     private JTextField txt;
     private JPanel panel;
 
-    private String currentText ;
+    private String num1="", num2="", operator;
 
-    public Keypad(){
+    public Calculator(){
         txt = new JTextField(20);
         add(txt, BorderLayout.NORTH);
         panel = new JPanel();
@@ -24,70 +24,53 @@ public class Keypad extends JFrame implements ActionListener {
             btn[i].addActionListener(this);
             btn[i].setPreferredSize(new Dimension(100,100));
             panel.add(btn[i]);
-            }
+        }
         pack();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
-        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-
         switch (actionCommand) {
             case "+":
-                currentText = txt.getText().trim();
-                if (!currentText.isEmpty()) {
-                    txt.setText(currentText + "+");
-                }
-                break;
             case "-":
-                currentText = txt.getText().trim();
-                if (!currentText.isEmpty()) {
-                    txt.setText(currentText + "-");
-                }
-                break;
-            case "/" :
-                currentText = txt.getText().trim();
-                if (!currentText.isEmpty()) {
-                    txt.setText(currentText + "/");
-                }
-                break;
-            case "*" :
-                currentText = txt.getText().trim();
-                if (!currentText.isEmpty()) {
-                    txt.setText(currentText + "*");
-                }
+            case "*":
+            case "/":
+                operator = actionCommand;
+                num1 = txt.getText().trim();
+                txt.setText("");
                 break;
             case "=":
-                String expression = txt.getText().trim();
-                String[] terms = expression.split("(?<=[-+*/])|(?=[-+*/])");
-                double result = Double.parseDouble(terms[0]);
-                String operator = "";
-
-                for (int i = 1; i < terms.length; i += 2) {
-                    operator = terms[i];
-                    double operand = Double.parseDouble(terms[i + 1]);
+                num2 = txt.getText().trim();
+                if(!num1.isEmpty() && !num2.isEmpty()) {
+                    double result = 0;
+                    double n1 = Double.parseDouble(num1);
+                    double n2 = Double.parseDouble(num2);
 
                     switch (operator) {
                         case "+":
-                            result += operand;
+                            result = n1 + n2;
                             break;
                         case "-":
-                            result -= operand;
+                            result = n1 - n2;
                             break;
                         case "*":
-                            result *= operand;
+                            result = n1 * n2;
                             break;
                         case "/":
-                            if (operand != 0) {
-                                result /= operand;
+                            if (n2 != 0) {
+                                result = n1 / n2;
+                            } else {
+                                txt.setText("잘못된 숫자를 입력하였습니다.");
+                                return;
                             }
                             break;
                     }
-                }
 
-                txt.setText(Double.toString(result));
+                    txt.setText(Double.toString(result));
+                }
                 break;
             case "C":
                 txt.setText("");
@@ -99,8 +82,6 @@ public class Keypad extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new Keypad();
+        new Calculator();
     }
 }
-
-
